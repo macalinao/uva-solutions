@@ -10,13 +10,13 @@ public class Main {
             int j = sc.nextInt();
 
             int max = 0;
-            for (int x = i; x <= j; x++) {
+            for (int x = Math.min(i, j); x <= Math.max(i, j); x++) {
                 max = Math.max(max, cycleLen(x));
             }
             System.out.println(i + " " + j + " " + max);
         }
     }
-    
+
     public static int cycleLen(int n) {
         int len = 1;
         while (n != 1) {
