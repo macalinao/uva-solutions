@@ -64,12 +64,12 @@ public class Main {
         }
 
         public Ret longestPath() {
-            if (longest != null) {
-                return longest;
-            }
-
             if (to.isEmpty()) {
                 return new Ret(0, val);
+            }
+
+            if (longest != null) {
+                return longest;
             }
 
             Ret r = new Ret(-1, -1);
