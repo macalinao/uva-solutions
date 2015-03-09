@@ -10,7 +10,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             int n = sc.nextInt();
-            if (n == 0) return;
+            if (n == 0) {
+                return;
+            }
             int s = sc.nextInt();
 
             // Construct graph
@@ -53,6 +55,8 @@ public class Main {
 
         public int val;
 
+        public Ret longest = null;
+
         public Set<Node> to = new HashSet<>();
 
         public Node(int val) {
@@ -60,6 +64,10 @@ public class Main {
         }
 
         public Ret longestPath() {
+            if (longest != null) {
+                return longest;
+            }
+
             if (to.isEmpty()) {
                 return new Ret(0, val);
             }
@@ -77,7 +85,10 @@ public class Main {
                     }
                 }
             }
-            return new Ret(r.length + 1, r.terminus);
+
+            Ret rt = new Ret(r.length + 1, r.terminus);
+            longest = rt;
+            return rt;
         }
     }
 
