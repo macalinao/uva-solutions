@@ -48,7 +48,7 @@ public class Main {
     public static void solve(int c, int n, int s) {
         Node sn = get(s);
         Ret sol = sn.longestPath();
-        System.out.println("Case " + c + ": The longest path from " + s + " has length " + sol.length + ", finishing at " + sol.terminus + ".");
+        System.out.println("Case " + c + ": The longest path from " + s + " has length " + sol.length + ", finishing at " + sol.terminus + ".\n");
     }
 
     public static class Node {
