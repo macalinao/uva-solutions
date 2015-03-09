@@ -5,4 +5,5 @@ then echo "Usage: ./run.sh <problem>";
 exit
 fi
 
-javac $1/Main.java && java $1/Main input.txt
+cd $1
+javac Main.java && cat input.txt | java Main
