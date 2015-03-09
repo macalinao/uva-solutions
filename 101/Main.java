@@ -24,25 +24,38 @@ public class Main {
             String[] parts = cmd.split(" ");
             int a = Integer.parseInt(parts[1]);
             int b = Integer.parseInt(parts[3]);
-            if (a == b) {
+
+            if (a == b || a >= blocks || b >= blocks) {
                 continue;
             }
-            if (parts[0].equals("move")) {
-                if (parts[2].equals("onto")) {
-                    int as = moveBack(stacks, a, a);
-                    int bs = moveBack(stacks, b, b);
-                    stacks.get(bs).addLast(stacks.get(as).pollLast());
-                } else {
-                    int as = moveBack(stacks, a, a);
-                    stacks.get(findStack(stacks, b)).addLast(stacks.get(as).pollLast());
-                }
-            } else if (parts[0].equals("pile")) {
-                if (parts[2].equals("onto")) {
-                    int bs = moveBack(stacks, b, b);
-                    pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
-                } else {
-                    pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
-                }
+
+            switch (parts[0]) {
+                case "move":
+                    switch (parts[2]) {
+                        case "onto": {
+                            int as = moveBack(stacks, a, a);
+                            int bs = moveBack(stacks, b, b);
+                            stacks.get(bs).addLast(stacks.get(as).pollLast());
+                            break;
+                        }
+                        case "over": {
+                            int as = moveBack(stacks, a, a);
+                            stacks.get(findStack(stacks, b)).addLast(stacks.get(as).pollLast());
+                            break;
+                        }
+                    }
+                    break;
+                case "pile":
+                    switch (parts[2]) {
+                        case "onto":
+                            moveBack(stacks, b, b);
+                            pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
+                            break;
+                        case "over":
+                            pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
+                            break;
+                    }
+                    break;
             }
         }
 
