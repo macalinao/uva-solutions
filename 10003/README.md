@@ -1,6 +1,6 @@
 10003
 =====
 
-Status: **WIP**
+Status: **Accepted**
 
 I used DP for this problem.
