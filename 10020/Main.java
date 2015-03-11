@@ -35,14 +35,18 @@ public class Main {
         Collections.sort(cs, new Comparator<C>() {
 
             public int compare(C t, C t1) {
-                return Integer.valueOf(t.a).compareTo(t1.a);
+                int res = Integer.valueOf(t.a).compareTo(t1.a);
+                if (res == 0) {
+                    return Integer.valueOf(t.b).compareTo(t1.b);
+                } else {
+                    return res;
+                }
             }
         });
 
-        bests = new LinkedList[5001][5001];
-        List<C> best = best(0, M, cs, 0);
+        List<C> best = best(M, cs);
 
-        if (best != null) {
+        if (!best.isEmpty()) {
             String r = best.size() + "\n";
             for (C c : best) {
                 r += c.toString() + "\n";
@@ -52,36 +56,42 @@ public class Main {
             return "0";
         }
     }
-    static LinkedList<C>[][] bests;
 
-    static LinkedList<C> best(int min, int max, List<C> cs, int start) {
-        LinkedList<C> best = bests[min][max];
-        if (best != null) {
-            return best;
-        }
-
-        // find best
-        for (int i = start; i < cs.size(); i++) {
+    static LinkedList<C> best(int m, List<C> cs) {
+        LinkedList<C> best = new LinkedList<>();
+        C base = null;
+        int min = 0;
+        for (int i = 0; i < cs.size(); i++) {
             C c = cs.get(i);
+            if (base == null) {
+                if (c.a <= min) {
+                    base = c;
+                }
+                continue;
+            } else {
+                if (base.b >= m) {
+                    break;
+                }
+            }
             if (c.a > min) {
-                break;
-            }
-            if (c.b >= max) {
-                best = new LinkedList<C>();
-                best.add(c);
-                break;
-            }
-            LinkedList<C> b = best(c.b, max, cs, i + 1);
-            if (b == null) {
+                min = base.b;
+                if (c.a > min) {
+                    break;
+                }
+                best.add(base);
+                base = c;
                 continue;
             }
-            if (best == null || b.size() + 1 < best.size()) {
-                best = b;
-                best.addFirst(c);
+            if (c.b > base.b) {
+                base = c;
             }
         }
-
-        bests[min][max] = best;
+        if (base != null) {
+            best.add(base);
+        }
+        if (best.peekLast() != null && best.peekLast().b < m) {
+            best.clear();
+        }
         return best;
     }
 
