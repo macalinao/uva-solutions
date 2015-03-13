@@ -1,6 +1,6 @@
 102
 =====
 
-Status: **IQ**
+Status: **Accepted**
 
 Brute force is fast on this.
