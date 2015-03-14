@@ -29,30 +29,37 @@ public class Main {
                 continue;
             }
 
+            int as = findStack(stacks, a);
+            int bs = findStack(stacks, b);
+            if (as == bs) {
+                continue;
+            }
+
             switch (parts[0]) {
                 case "move":
                     switch (parts[2]) {
-                        case "onto": {
-                            int as = moveBack(stacks, a, a);
-                            int bs = moveBack(stacks, b, b);
+                        case "onto":
+                            moveBack(stacks, as, a);
+                            moveBack(stacks, bs, b);
                             stacks.get(bs).addLast(stacks.get(as).pollLast());
                             break;
-                        }
-                        case "over": {
-                            int as = moveBack(stacks, a, a);
-                            stacks.get(findStack(stacks, b)).addLast(stacks.get(as).pollLast());
+                        case "over":
+                            moveBack(stacks, as, a);
+                            stacks.get(bs).addLast(stacks.get(as).pollLast());
                             break;
-                        }
                     }
                     break;
                 case "pile":
+                    if (as == bs) {
+                        continue;
+                    }
                     switch (parts[2]) {
                         case "onto":
-                            moveBack(stacks, b, b);
-                            pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
+                            moveBack(stacks, bs, b);
+                            pile(stacks, as, bs, a);
                             break;
                         case "over":
-                            pile(stacks, findStack(stacks, a), findStack(stacks, b), a);
+                            pile(stacks, as, bs, a);
                             break;
                     }
                     break;
@@ -65,7 +72,7 @@ public class Main {
             for (int a : s) {
                 list += " " + a;
             }
-            System.out.println(" " + i + ":" + list);
+            System.out.println(i + ":" + list);
             i++;
         }
     }
@@ -97,16 +104,13 @@ public class Main {
         return stack;
     }
 
-    public static int moveBack(List<LinkedList<Integer>> stacks, int block, int until) {
+    public static void moveBack(List<LinkedList<Integer>> stacks, int stack, int until) {
         // find the block
-        int stack = findStack(stacks, block);
-
         LinkedList<Integer> s = stacks.get(stack);
         while (s.peekLast() != until) {
             int el = s.pollLast();
             stacks.get(el).addLast(el);
         }
-        return stack;
     }
 
 }
