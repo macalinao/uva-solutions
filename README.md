@@ -13,7 +13,8 @@ $ ./run.sh <problem>
 
 where `<problem>` is the directory.
 
-You need a `Main.java`, `input.txt`, and `output.txt` to use the runner.
+You need a `Main.java`, `input.txt`, and `output.txt` to use the runner. Just
+place those files in the problem directory.
 
 ## License
 
